@@ -8,10 +8,14 @@ namespace UrlShortnerApps.DataAccess.Abstract
 {
     public interface IUriRepository
     {
-        Task<List<UriDetails>> GetAllAsync();
-        Task<UriDetails> GetByIdAsync(string id);
-        Task<UriDetails> CreateAsync(UriDetails customer);
-        Task UpdateAsync(string id, UriDetails customer);
-        Task DeleteAsync(string id);
+         Task<InsertRecordResponse> InsertRecord(UriDetails request);
+         Task<GetAllRecordResponse> GetAllRecord();
+         Task<GetRecordByIdResponse> GetRecordById(string id);
+         Task<GetRecordByNameResponse> GetRecordByName(string name);
+        Task<GetRecordByNameResponse> GetRecordByUserId(string name);
+        Task<UpdateRecordByIdResponse> UpdateRecordById(UriDetails request);
+         Task<UpdateSalaryByIdResponse> UpdateSalaryById(UpdateSalaryByIdRequest request);
+         Task<DeleteRecordByIdResponse> DeletedRecordById(DeleteRecordByIdRequest request);
+         Task<DeleteAllRecordResponse> DeleteAllRecord();
     }
 }

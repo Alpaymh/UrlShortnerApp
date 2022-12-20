@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UrlShortnerApp.Business\UrlShortnerApp.Business.csproj" />
+    <ProjectReference Include="..\UrlShortnerApps.DataAccess\UrlShortnerApps.DataAccess.csproj" />
     <ProjectReference Include="..\UrlShortnerApps.Entities\UrlShortnerApps.Entities.csproj" />
   </ItemGroup>
 

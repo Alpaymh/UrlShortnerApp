@@ -8,10 +8,13 @@ namespace UrlShortnerApps.DataAccess.Abstract
 {
     public interface IUserRepository
     {
-        Task<List<Users>> GetAllAsync();
-        Task<Users> GetByIdAsync(string id);
-        Task<Users> CreateAsync(Users customer);
-        Task UpdateAsync(string id, Users customer);
-        Task DeleteAsync(string id);
+        Task<InsertRecordResponse> InsertRecord(Users request);
+        Task<GetAllRecordUser> GetAllRecord();
+        Task<GetRecordByIdUser> GetRecordById(string id);
+        Task<GetRecordByIdUser> GetRecordByName(string name,string email);
+        Task<UpdateRecordByIdResponse> UpdateRecordById(Users request);
+        Task<UpdateSalaryByIdResponse> UpdateSalaryById(UpdateSalaryByIdRequest request);
+        Task<DeleteRecordByIdResponse> DeletedRecordById(DeleteRecordByIdRequest request);
+        Task<DeleteAllRecordResponse> DeleteAllRecord();
     }
 }

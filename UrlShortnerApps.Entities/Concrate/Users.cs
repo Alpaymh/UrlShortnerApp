@@ -11,7 +11,7 @@ namespace UrlShortnerApps.Entities.Concrate
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string id { get; set; }
 
         [BsonElement("username")]
         [Required(ErrorMessage ="Lütfen Kullanici Adinizi Giriniz")]
@@ -26,6 +26,11 @@ namespace UrlShortnerApps.Entities.Concrate
 
         [BsonElement("isadmin")]
         public bool isadmin { get; set; } = false;
+
+        [BsonElement("createdate")]
+        public string createdate { get; set; }
+        [BsonElement("updateddate")]
+        public string updateddate { get; set; }
 
 
     }

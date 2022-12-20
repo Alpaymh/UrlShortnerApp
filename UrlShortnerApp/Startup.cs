@@ -10,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UrlShortnerApp.Business.Abstract;
-using UrlShortnerApp.Business.Concrate;
 using UrlShortnerApps.DataAccess.Abstract;
 using UrlShortnerApps.DataAccess.Concrate;
 
@@ -41,9 +39,7 @@ namespace UrlShortnerApp
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MongoDB CRUD API", Version = "v1" });
             });
 
-            services.Configure<DbConfiguration>(Configuration.GetSection("MongoDbConnection"));
-            services.AddScoped<IUserService, UserServices>();
-            services.AddScoped<IUriDetailService, UriDetailService>();
+            services.AddScoped<IShortUrlService, ShortUrlService>();
             services.AddScoped<IUriRepository, UriRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

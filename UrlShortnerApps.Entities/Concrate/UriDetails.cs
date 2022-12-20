@@ -12,7 +12,7 @@ namespace UrlShortnerApps.Entities.Concrate
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string id { get; set; }
 
         [BsonElement("originalurl")]
         public string originalurl { get; set; }
@@ -21,10 +21,18 @@ namespace UrlShortnerApps.Entities.Concrate
         public string shortnerurl { get; set; }
 
         [BsonElement("createdate")]
-        public DateTime createdate { get; set; }
+        public string createdate { get; set; }
+        [BsonElement("updateddate")]
+        public string updateddate { get; set; }
 
         [BsonElement("ticketcount")]
-        public int ticketcount { get; set; }
+        public string ticketcount { get; set; }
+
+        [BsonElement("randomusernumber")]
+        public string randomusernumber { get; set; }
+
+        [BsonElement("tiklamasayi")]
+        public int tiklamasayi { get; set; }
 
 
     }

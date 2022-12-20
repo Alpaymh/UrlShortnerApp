@@ -1,31 +1,27 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Policy;
 using System.Threading.Tasks;
-using UrlShortnerApp.Models;
+using System;
 using UrlShortnerApps.DataAccess.Abstract;
 using UrlShortnerApps.Entities.Concrate;
+using UrlShortnerApp.Models;
 
 namespace UrlShortnerApp.Controllers
 {
-    [ApiController]
     [Route("api/[controller]/[Action]")]
-    public class UrlShortnerApiController : ControllerBase
+    [ApiController]
+    public class UserApiController : ControllerBase
     {
-        private readonly IUriRepository _crudOperationDl;
 
-        public UrlShortnerApiController(IUriRepository crudOperationDl)
+        private readonly IUserRepository _crudOperationDl;
+
+        public UserApiController(IUserRepository crudOperationDl)
         {
             _crudOperationDl = crudOperationDl;
         }
         [HttpPost]
-        public async Task<IActionResult> InserRecord(UriDetails request)
+        public async Task<IActionResult> InserRecord(Users request)
         {
-            request.originalurl = request.originalurl;
-            var bitly = new bitly();
-            bitly.ACCESS_TOKEN = "c4e4f370e43adc0890dda78d2ec986483186eeb5";
-            request.shortnerurl = await bitly.ShortenAsync(request.originalurl);
             InsertRecordResponse response = new InsertRecordResponse();
             try
             {
@@ -44,7 +40,7 @@ namespace UrlShortnerApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRecord()
         {
-            GetAllRecordResponse response = new GetAllRecordResponse();
+            GetAllRecordUser response = new GetAllRecordUser();
             try
             {
                 response = await _crudOperationDl.GetAllRecord();
@@ -62,7 +58,7 @@ namespace UrlShortnerApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRecordById([FromQuery] string id)
         {
-            GetRecordByIdResponse response = new GetRecordByIdResponse();
+            GetRecordByIdUser response = new GetRecordByIdUser();
             try
             {
                 response = await _crudOperationDl.GetRecordById(id);
@@ -75,13 +71,15 @@ namespace UrlShortnerApp.Controllers
 
             return Ok(response);
         }
+
+
         [HttpGet]
-        public async Task<IActionResult> GetRecordByUserId([FromQuery] string id)
+        public async Task<IActionResult> GetRecordByName([FromQuery] string name,string password)
         {
-            GetRecordByNameResponse response = new GetRecordByNameResponse();
+            GetRecordByIdUser response = new GetRecordByIdUser();
             try
             {
-                response = await _crudOperationDl.GetRecordByUserId(id);
+                response = await _crudOperationDl.GetRecordByName(name,UrlShortner.GetMd5(password));
             }
             catch (Exception ex)
             {
@@ -93,27 +91,11 @@ namespace UrlShortnerApp.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetRecordByName([FromQuery] string name)
-        {
-            GetRecordByNameResponse response = new GetRecordByNameResponse();
-            try
-            {
-                response = await _crudOperationDl.GetRecordByName(name);
-            }
-            catch (Exception ex)
-            {
-                response.IsSucces = false;
-                response.Message = "Exception Occurs = " + ex.Message;
-            }
-
-            return Ok(response);
-        }
 
 
         //Id'ye göre kullanıcı güncelleme
         [HttpPut]
-        public async Task<IActionResult> UpdateRecordById(UriDetails request)
+        public async Task<IActionResult> UpdateRecordById(Users request)
         {
             UpdateRecordByIdResponse response = new UpdateRecordByIdResponse();
             try
