@@ -50,6 +50,18 @@ namespace UrlShortnerApp.Controllers
             return View(response.data);
         }
         [HttpPost]
+        public async Task<IActionResult> ListUris(string urlStr)
+        {
+            GetRecordByIdResponse response = new GetRecordByIdResponse();
+
+            response = await _crudOperationDlShort.GetRecordById(urlStr);
+            response.data.tiklamasayi += 1;
+            UpdateRecordByIdResponse response2 = new UpdateRecordByIdResponse();
+            response2 = await _crudOperationDlShort.UpdateRecordById(response.data);
+
+            return Redirect(urlStr);
+        }
+        [HttpPost]
         public async Task<IActionResult> Index(Users user)
         {
             GetRecordByIdUser response = new GetRecordByIdUser();

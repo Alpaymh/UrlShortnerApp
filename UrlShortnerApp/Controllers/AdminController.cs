@@ -62,5 +62,18 @@ namespace UrlShortnerApp.Controllers
             return RedirectToAction("ListUri", "Admin");
 
         }
+        [HttpPost]
+        public async Task<IActionResult> UriGet(string urlStr)
+        {
+            GetRecordByIdResponse response = new GetRecordByIdResponse();
+
+            response = await _crudOperationDlShort.GetRecordById(urlStr);
+            response.data.tiklamasayi += 1;
+            UpdateRecordByIdResponse response2 = new UpdateRecordByIdResponse();
+            response2 = await _crudOperationDlShort.UpdateRecordById(response.data);
+
+            return Redirect(urlStr);
+        }
+
     }
 }

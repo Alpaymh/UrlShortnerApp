@@ -196,11 +196,11 @@ namespace UrlShortnerApps.DataAccess.Concrate
             response.Message = "Id başarıyla güncellenmiştir";
             try
             {
-                GetRecordByIdResponse response1 = await GetRecordById(request.id);
+                GetRecordByIdResponse response1 = await GetRecordById(request.shortnerurl);
                 request.createdate = response1.data.createdate;
                 request.updateddate = DateTime.Now.ToString();
 
-                var result = await _mongoCollection.ReplaceOneAsync(x => x.id == request.id, request);
+                var result = await _mongoCollection.ReplaceOneAsync(x => x.shortnerurl == request.shortnerurl, request);
 
                 if (!result.IsAcknowledged)
                 {
