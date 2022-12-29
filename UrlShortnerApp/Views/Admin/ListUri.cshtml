@@ -108,8 +108,9 @@
                                     <th scope="col">Kisa Hali</th>
                                     <th scope="col">Yaratan</th>
                                     <th scope="col">Tiklanma Sayisi</th>
+                                    <th scope="col">QR-KODU</th>
                                     <th scope="col">Sil</th>
-                             
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,8 +128,9 @@
                                         </td>
                                         <td><a href="@item.ticketcount" target="_blank">@item.ticketcount</a></td>
                                         <td><a href="@item.tiklamasayi" target="_blank">@item.tiklamasayi</a></td>
+                                        <td><img src="@item.qrCodeStr" /></td>
                                         <td><form method="post" asp-action="ListUri" asp-controller="Admin"><input type="text" id="shortDet" name="shortDet" value="@item.shortnerurl" hidden /><input type="submit" value="Sil" class="bg-danger text-secondary" /></form></td>
-                                       
+
                                     </tr>
                                 }
                             </tbody>

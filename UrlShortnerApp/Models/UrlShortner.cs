@@ -8,12 +8,12 @@ namespace UrlShortnerApp.Models
 {
     public class UrlShortner
     {
-        public static string  CurrentUserName { get; set; }
+        public static string CurrentUserName { get; set; }
         public static string CurrentUserId { get; set; }
         public static string UserId { get; set; }
         public static string UserMail { get; set; }
         public static string UserPassword { get; set; }
-        public static void  SendMail(string mail)
+        public static void SendMail(string mail)
         {
             MailMessage message = new MailMessage();
             SmtpClient smtpClient = new SmtpClient();
@@ -22,7 +22,7 @@ namespace UrlShortnerApp.Models
             smtpClient.Credentials = new System.Net.NetworkCredential("koustajyonetim@gmail.com", "ilknuarpdakicwpg");
             smtpClient.Port = 587;
             smtpClient.Host = "smtp.gmail.com";
-          
+
             smtpClient.EnableSsl = true;
             message.To.Add(mail);
             message.From = new MailAddress("koustajyonetim@gmail.com");
@@ -30,7 +30,7 @@ namespace UrlShortnerApp.Models
             message.Body = "Tebrikler !.Hesabınız ücretsiz bir şekilde oluşturuldu.Bütün hizmetlerimizden ücretsiz olarak yararlanabilirsiniz";
             smtpClient.Send(message);
         }
-        public static void SendMail2(string mail,string kisaltilanLink)
+        public static void SendMail2(string getterMail, string kisaltilanLink)
         {
             MailMessage message = new MailMessage();
             SmtpClient smtpClient = new SmtpClient();
@@ -41,10 +41,10 @@ namespace UrlShortnerApp.Models
             smtpClient.Host = "smtp.gmail.com";
 
             smtpClient.EnableSsl = true;
-            message.To.Add(mail);
+            message.To.Add(getterMail);
             message.From = new MailAddress("koustajyonetim@gmail.com");
             message.Subject = "Kisaltilan Link H.K";
-            message.Body = "Tebrikler !.Link Başarili Bir Şekilde Kisaltildi Kisaltilan Link : "+ kisaltilanLink;
+            message.Body = "Tebrikler !.Link Başarili Bir Şekilde Kisaltildi Kisaltilan Link : " + kisaltilanLink;
             smtpClient.Send(message);
         }
         public static void SendMail3(string mail)
@@ -81,8 +81,8 @@ namespace UrlShortnerApp.Models
         {
             Random rnd = new Random();
             string[] myArray = { "a", "b", "c", "d", "2", "3", "4", "5", "e", "f", "g", "h", "i", "j" };
-            string randomCümle="";
-            for(int i=0; i < 6; i++)
+            string randomCümle = "";
+            for (int i = 0; i < 6; i++)
             {
 
                 int randomNumber = rnd.Next(myArray.Length);
@@ -114,6 +114,13 @@ namespace UrlShortnerApp.Models
             }
 
             return builder.ToString();
+        }
+
+        public static string ByteArrayToImageAsync(byte[] image)
+        {
+            string base64String = Convert.ToBase64String(image, 0, image.Length);
+
+            return "data:image/png;base64," + base64String;
         }
     }
 }

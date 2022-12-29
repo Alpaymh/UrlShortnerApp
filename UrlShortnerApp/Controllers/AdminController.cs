@@ -42,7 +42,16 @@ namespace UrlShortnerApp.Controllers
         {
             GetAllRecordResponse response = new GetAllRecordResponse();
 
+
             response = await _crudOperationDlShort.GetAllRecord();
+
+            foreach (var item in response.data)
+            {
+                if (item.qrCode != null)
+                {
+                    item.qrCodeStr = UrlShortner.ByteArrayToImageAsync(item.qrCode);
+                }
+            }
 
             return View(response.data);
 

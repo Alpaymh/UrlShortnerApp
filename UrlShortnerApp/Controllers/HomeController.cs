@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MessagingToolkit.QRCode.Codec;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
@@ -39,21 +42,25 @@ namespace UrlShortnerApp.Controllers
             try
             {
                 response = await _crudOperationDlShort.GetRecordByUserId(UrlShortner.UserMail);
+                foreach (var item in response.data)
+                {
+                    if (item.qrCode != null)
+                    {
+                        item.qrCodeStr = UrlShortner.ByteArrayToImageAsync(item.qrCode);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 response.IsSucces = false;
                 response.Message = "Exception Occurs = " + ex.Message;
             }
-
-
             return View(response.data);
         }
         [HttpPost]
         public async Task<IActionResult> ListUris(string urlStr)
         {
             GetRecordByIdResponse response = new GetRecordByIdResponse();
-
             response = await _crudOperationDlShort.GetRecordById(urlStr);
             response.data.tiklamasayi += 1;
             UpdateRecordByIdResponse response2 = new UpdateRecordByIdResponse();
@@ -99,7 +106,16 @@ namespace UrlShortnerApp.Controllers
         {
             return View();
         }
+        public byte[] ImageToByteArray(Bitmap image)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return memoryStream.ToArray();
+        }
         bitly bitlyApi = new bitly();
+        QRCodeEncoder dc = new QRCodeEncoder();
+        QRCodeDecoder en = new QRCodeDecoder();
+
         [HttpPost]
         public async Task<ActionResult> Create(UriDetails Urls)
         {
@@ -112,6 +128,8 @@ namespace UrlShortnerApp.Controllers
                 GetRecordByIdResponse uriResponse = new GetRecordByIdResponse();
                 Urls.ticketcount = UrlShortner.UserMail;
                 Urls.tiklamasayi = 0;
+                Bitmap img = dc.Encode(Urls.shortnerurl.ToString());
+                Urls.qrCode = ImageToByteArray(img);
                 response = await _crudOperationDlShort.InsertRecord(Urls);
                 UrlShortner.SendMail2(UrlShortner.UserMail, Urls.shortnerurl);
             }

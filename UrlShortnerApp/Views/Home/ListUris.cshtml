@@ -79,7 +79,7 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-               
+
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -87,17 +87,15 @@
                             <span class="d-none d-lg-inline-flex">@UrlShortner.CurrentUserName</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Çıkış Yap</a>
+                            <a asp-controller="Home" asp-action="Index" class="dropdown-item">Çıkış Yap</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
             <!-- Sale & Revenue Start -->
-
             <!-- Sale & Revenue End -->
             <!-- Sales Chart Start -->
-          
             <!-- Sales Chart End -->
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
@@ -111,24 +109,25 @@
                                 <tr class="text-white">
                                     <th scope="col">Orjinal Hali</th>
                                     <th scope="col">Kisa Hali</th>
-
+                                    <th scope="col">QR-KODU</th>
                                 </tr>
                             </thead>
                             <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td> <a href="@item.originalurl" target="_blank">@item.originalurl</a></td>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td> <a href="@item.originalurl" target="_blank">@item.originalurl</a></td>
                                         <td>
                                             @using (Html.BeginForm("ListUris", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "MainForm" }))
                                             {
-                                                <input type="text" value="@item.shortnerurl" name="urlStr" hidden/>
+                                                <input type="text" value="@item.shortnerurl" name="urlStr" hidden />
                                                 @*<a href="@item.shortnerurl" target="_blank">@item.shortnerurl</a>*@
-                                                <input type="submit" value="@item.shortnerurl"/>
+                                                <input type="submit" value="@item.shortnerurl" />
                                             }
-                                            </td>
-                        </tr>
-                    }
+                                        </td>
+                                        <td><img src="@item.qrCodeStr" /></td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

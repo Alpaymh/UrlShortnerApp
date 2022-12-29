@@ -33,7 +33,10 @@ namespace UrlShortnerApps.Entities.Concrate
 
         [BsonElement("tiklamasayi")]
         public int tiklamasayi { get; set; }
+        [BsonElement("qrCode")]
+        public byte[] qrCode { get; set; }
 
-
+        [BsonElement("qrCodeStr")]
+        public string qrCodeStr { get; set; }
     }
 }

@@ -74,12 +74,12 @@ namespace UrlShortnerApp.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetRecordByName([FromQuery] string name,string password)
+        public async Task<IActionResult> GetRecordByName([FromQuery] string name, string password)
         {
             GetRecordByIdUser response = new GetRecordByIdUser();
             try
             {
-                response = await _crudOperationDl.GetRecordByName(name,UrlShortner.GetMd5(password));
+                response = await _crudOperationDl.GetRecordByName(name, UrlShortner.GetMd5(password));
             }
             catch (Exception ex)
             {
@@ -89,8 +89,6 @@ namespace UrlShortnerApp.Controllers
 
             return Ok(response);
         }
-
-
 
 
         //Id'ye göre kullanıcı güncelleme
